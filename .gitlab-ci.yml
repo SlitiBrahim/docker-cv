@@ -8,11 +8,15 @@ services:
 build-image:
   stage: build
   image: docker:latest
+  variables:
+    CI_DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
   before_script:
     - echo $CI_REGISTRY_PASSWORD |
       docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
-    - docker build -t $CI_REGISTRY_IMAGE -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" .
-    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+    - docker build -t $CI_REGISTRY_IMAGE -t $CI_DOCKER_IMAGE_NAME .
+    - docker push $CI_DOCKER_IMAGE_NAME
+  after_script:
+    - echo "Docker image name: $CI_DOCKER_IMAGE_NAME"
   only:
     - master
