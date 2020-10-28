@@ -1,0 +1,9 @@
+image: ubuntu:20.04
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - echo "Testing CI/CD on gitlab"
