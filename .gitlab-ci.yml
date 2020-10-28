@@ -17,6 +17,6 @@ build-image:
     - docker build -t $CI_REGISTRY_IMAGE -t $CI_IMAGE_NAME .
     - docker push $CI_IMAGE_NAME
   after_script:
-    - echo Docker image name: "$CI_IMAGE_NAME"
+    - echo Docker image name: $CI_IMAGE_NAME
   only:
     - master
