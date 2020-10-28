@@ -2,6 +2,9 @@ stages:
   - build
   - deploy
 
+services:
+  - docker:dind
+
 build-image:
   stage: build
   image: docker:latest
@@ -12,5 +15,3 @@ build-image:
     - docker build -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" .
   #only:
     #- master
-  tags:
-    - dind
