@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: cv-docker-nginx
-        image: slitibrahim/cv:0.0.1
+        image: "{{ image_id }}"
         ports:
         - name: http
           containerPort: 80

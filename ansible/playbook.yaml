@@ -1,0 +1,19 @@
+---
+- name: Deploy my application
+  gather_facts: false
+  hosts: kubernetes
+  remote_user: root
+
+  tasks:
+    - name: Copy kubeconfig to node
+      copy:
+        src: "{{ lookup('env', 'LINODE_CLUSTER_KUBECONFIG') }}"
+        dest: /root/kubeconfig.yaml
+
+    - name: copy deployment file to node
+      copy:
+        dest: /tmp/deployment.yaml
+        content: "{{ lookup('template', '../../kubernetes-deployment-v2.yaml') }}"
+
+    - name: deploy application with new docker image
+      command: kubectl --kubeconfig /root/kubeconfig.yaml apply -f /tmp/deployment.yaml
