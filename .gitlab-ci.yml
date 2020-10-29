@@ -32,6 +32,6 @@ deploy:
     - pip3 install ansible
   script:
     - ansible-playbook -i ansible/hosts ansible/playbook.yaml
-      --extra-vars "image_id=$CI_IMAGE_FULL_NAME"
+      --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY"
   # only:
   #   - master
