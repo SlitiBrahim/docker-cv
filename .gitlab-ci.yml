@@ -5,18 +5,22 @@ stages:
 services:
   - docker:dind
 
+variables:
+  CI_IMAGE_FULL_NAME: "$CI_REPO:$CI_COMMIT_SHORT_SHA"
+
 build-image:
   stage: build
   image: docker:latest
   variables:
-    CI_IMAGE_NAME: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+    CI_PUSH_IMAGE_ROOT_PATH: "$CI_REGISTRY/$CI_REPO"
   before_script:
     - echo $CI_REGISTRY_PASSWORD |
       docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
-    - docker build -t $CI_REGISTRY_IMAGE -t $CI_IMAGE_NAME .
-    - docker push $CI_IMAGE_NAME
+    - docker build -t "$CI_PUSH_IMAGE_ROOT_PATH:$CI_COMMIT_SHORT_SHA"
+      -t "$CI_PUSH_IMAGE_ROOT_PATH:latest" .
+    - docker push $CI_PUSH_IMAGE_ROOT_PATH:$CI_COMMIT_SHORT_SHA
   after_script:
-    - echo "Docker image pushed at ${CI_IMAGE_NAME}"
-  only:
-    - master
+    - echo "Docker image pushed at ${CI_IMAGE_FULL_NAME}"
+  # only:
+  #   - master
