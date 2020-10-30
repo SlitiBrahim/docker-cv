@@ -28,10 +28,13 @@ build-image:
 deploy:
   stage: deploy
   image: python:3
+  variables:
+    GITLAB_SSH_KEY_FILE: "$(pwd)/gitlab_key"
   before_script:
+    - echo "$GITLAB_SSH_KEY" > "$GITLAB_SSH_KEY_FILE"
     - pip3 install ansible
   script:
     - ansible-playbook -i ansible/hosts ansible/playbook.yaml
-      --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY" -vvv
+      --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY_FILE" -vvv
   # only:
   #   - master
