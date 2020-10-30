@@ -30,7 +30,7 @@ build-image:
     - docker push $CI_PUSH_IMAGE_ROOT_PATH:$CI_COMMIT_SHORT_SHA
     - docker push "$CI_PUSH_IMAGE_ROOT_PATH:latest"
   after_script:
-    - echo "Docker image pushed at ${CI_IMAGE_FULL_NAME} 🔄 🐳"
+    - echo "Docker image pushed at ${CI_IMAGE_FULL_NAME} ✅ 🐳"
   only:
     - master
 
@@ -47,6 +47,6 @@ deploy:
     - ansible-playbook -i ansible/hosts ansible/playbook.yaml
       --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY_FILE"
   after_script:
-    - echo "Image updated on kubernetes cluster and now set to ${CI_IMAGE_FULL_NAME} ✅ 🐳"
+    - echo "Image updated on kubernetes cluster and now set to ${CI_IMAGE_FULL_NAME} 🔄 🐳"
   only:
     - master
