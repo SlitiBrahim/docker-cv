@@ -1,2 +1,2 @@
 [kubernetes]
-139.162.238.209
+139.162.238.209 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
