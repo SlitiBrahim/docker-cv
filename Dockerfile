@@ -2,6 +2,7 @@ FROM nginx:latest
 
 WORKDIR /cv
 COPY cv.pdf .
+COPY index.html .
 
 RUN apt-get update && apt-get install -y \
     poppler-utils \
