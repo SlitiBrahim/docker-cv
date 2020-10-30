@@ -67,7 +67,11 @@ spec:
   - http:
       paths:
       # at root: "/" or at "/cv"
-      - path: /(cv)?
+      - path: /cv
+        backend:
+          serviceName: cv-docker-svc
+          servicePort: 80
+      - path: /
         backend:
           serviceName: cv-docker-svc
           servicePort: 80
