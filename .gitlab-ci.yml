@@ -28,16 +28,12 @@ build-image:
 deploy:
   stage: deploy
   image: python:3
-  variables:
-    GITLAB_SSH_KEY_FILE: "gitlab_key"
   before_script:
-    - echo "$GITLAB_SSH_KEY" > "$GITLAB_SSH_KEY_FILE"
-    - cat $GITLAB_SSH_KEY_FILE
-    - chmod 600 $GITLAB_SSH_KEY_FILE # ansible won't use key if more than read+write permissions
+    - chmod 600 $GITLAB_SSH_KEY # ansible won't use key if more than read+write permissions
     - pip3 install ansible
   script:
     - ansible-playbook -i ansible/hosts ansible/playbook.yaml
-      --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY_FILE" -vvv
+      --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY"
   artifacts:
     paths:
       - $GITLAB_SSH_KEY_FILE
