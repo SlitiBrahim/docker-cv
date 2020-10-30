@@ -1,4 +1,5 @@
 stages:
+  - test
   - build
   - deploy
 
@@ -7,6 +8,13 @@ services:
 
 variables:
   CI_IMAGE_FULL_NAME: "$CI_REPO:$CI_COMMIT_SHORT_SHA"
+
+test:
+  stage: test
+  image: busybox
+  script:
+    - echo "check if $CV_FILENAME is present in the repository"
+    - test -f $CV_FILENAME || echo "$CV_FILENAME is not present ❌"
 
 build-image:
   stage: build
@@ -22,7 +30,7 @@ build-image:
     - docker push $CI_PUSH_IMAGE_ROOT_PATH:$CI_COMMIT_SHORT_SHA
     - docker push "$CI_PUSH_IMAGE_ROOT_PATH:latest"
   after_script:
-    - echo "Docker image pushed at ${CI_IMAGE_FULL_NAME}"
+    - echo "Docker image pushed at ${CI_IMAGE_FULL_NAME} 🔄 🐳"
   only:
     - master
 
@@ -38,5 +46,7 @@ deploy:
   script:
     - ansible-playbook -i ansible/hosts ansible/playbook.yaml
       --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY_FILE"
+  after_script:
+    - echo "Image updated on kubernetes cluster and now set to ${CI_IMAGE_FULL_NAME} ✅ 🐳"
   only:
     - master
