@@ -39,6 +39,7 @@ deploy:
     - ansible-playbook -i ansible/hosts ansible/playbook.yaml
       --extra-vars "image_id=$CI_IMAGE_FULL_NAME gitlab_ssh_key=$GITLAB_SSH_KEY_FILE" -vvv
   artifacts:
-    - $GITLAB_SSH_KEY_FILE
+    paths:
+      - $GITLAB_SSH_KEY_FILE
   # only:
   #   - master
