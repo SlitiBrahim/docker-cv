@@ -20,6 +20,7 @@ build-image:
     - docker build -t "$CI_PUSH_IMAGE_ROOT_PATH:$CI_COMMIT_SHORT_SHA"
       -t "$CI_PUSH_IMAGE_ROOT_PATH:latest" .
     - docker push $CI_PUSH_IMAGE_ROOT_PATH:$CI_COMMIT_SHORT_SHA
+    - docker push "$CI_PUSH_IMAGE_ROOT_PATH:latest"
   after_script:
     - echo "Docker image pushed at ${CI_IMAGE_FULL_NAME}"
   # only:
@@ -32,7 +33,6 @@ deploy:
     GITLAB_SSH_KEY_FILE: "gitlab_key"
   before_script:
     - echo "$GITLAB_SSH_KEY" > "$GITLAB_SSH_KEY_FILE"
-    - cat $GITLAB_SSH_KEY_FILE
     - chmod 600 $GITLAB_SSH_KEY_FILE # ansible won't use key if more than read+write permissions
     - pip3 install ansible
   script:
