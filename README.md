@@ -5,13 +5,13 @@
     <img src="assets/docker-cv-cover.jpg" alt="Logo">
   </a>
 
-  <h3 align="center">docker-cv: My CV running in the cloud.</h3>
+  <h3 align="center">My CV running in the cloud.</h3>
 </p>
 
 # docker-cv
 As a DevOps Engineer, I want my CV to be like any other application: tested, built and deployed through a CI/CD pipeline.
 
-In that way, when I update my `pdf` CV, I can automatically deploy my new CV and make it available online.
+In that way, when I update my `pdf` CV file, I can automatically deploy my new CV and make it available online.
 
 My resume available [here](http://sliti-brahim.com/cv) is running on a Kubernetes cluster in the cloud and this is the code repository of that application you can explore and use for you own CV.
 
@@ -49,7 +49,7 @@ You can now navigate to http://localhost:80 and see the CV.
 
 ![alt text](assets/brahim-cmd-capture.gif)
 
-```ssh
+```sh
 $ docker run --rm --it slitibrahim/cv bash
 $ brahim
 ```
