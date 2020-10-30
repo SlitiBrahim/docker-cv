@@ -29,7 +29,7 @@ deploy:
   stage: deploy
   image: python:3
   variables:
-    GITLAB_SSH_KEY_FILE: "$(pwd)/gitlab_key"
+    GITLAB_SSH_KEY_FILE: "gitlab_key"
   before_script:
     - echo "$GITLAB_SSH_KEY" > "$GITLAB_SSH_KEY_FILE"
     - pip3 install ansible
