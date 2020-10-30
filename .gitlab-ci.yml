@@ -32,6 +32,7 @@ deploy:
     GITLAB_SSH_KEY_FILE: "gitlab_key"
   before_script:
     - echo "$GITLAB_SSH_KEY" > "$GITLAB_SSH_KEY_FILE"
+    - chmod 600 $GITLAB_SSH_KEY_FILE # ansible won't use key if more than read+write permissions
     - pip3 install ansible
   script:
     - ansible-playbook -i ansible/hosts ansible/playbook.yaml
